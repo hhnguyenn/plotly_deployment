@@ -50,41 +50,42 @@ function optionChanged(newSample) {
         var result = resultArray[0];
     
 
-        //properties
-        var toptenOUTids = result.otu_ids.map(id=>`OTUid ${id}`).slice(0,10).reverse();
-        var toptensampleValues = result.sample_values.slice(0,10).reverse();
-        var toptenlabels = result.otu_labels.slice(0,10).reverse();
+        //Bar Chart
+        var ids = result.otu_ids.map(id=>`OTUid ${id}`).slice(0,10).reverse();
+        var sample_values = result.sample_values.slice(0,10).reverse();
+        var labels1 = result.otu_labels.slice(0,10).reverse();
       
-        // Bar Chart
         var trace = {
-            x: toptensampleValues,
-            y: toptenOUTids,
+            x: sample_values,
+            y: ids,
             type: "bar",
             orientation: 'h',
-            text: toptenlabels,
+            text: labels1,
         };
         var data = [trace];
         var layout = {
             title: "Top 10 Bacterial Species (OTUs)",
+            height: 500,
+            width: 500,
             xaxis: { title: "Count" },
             yaxis: { title: "Bacterial IDs"},
         };
         Plotly.newPlot("bar", data, layout);
 
         // Bubble Chart
-        var OUTids = result.otu_ids
-        var sampleValues = result.sample_values
+        var Bubids = result.otu_ids
+        var sample = result.sample_values
         var labels = result.otu_labels
         
         var trace1 = {
-            x: OUTids,
-            y: sampleValues,
+            x: Bubids,
+            y: sample,
             text: labels,
             mode: 'markers',
             marker: {
-            size: sampleValues,
-            color: OUTids,
-            colorscale: "Earth"
+            size: sample,
+            color: Bubids,
+            colorscale: "RdBu"
           }
         };
         
@@ -92,8 +93,7 @@ function optionChanged(newSample) {
 
         var layout = {
             title: 'Type and Size of Bacteria in Belly Button',
-            xaxis: { title: "OTU Ids" },
-            yaxis: { title: "Sample Values"},
+            xaxis: { title: "OTU IDs" },
             showlegend: false,
             height: 600,
             width: 1200
@@ -116,14 +116,16 @@ function optionChanged(newSample) {
                     gauge: {
                         axis: { range: [null, 10] },
                         steps: [
-                            { range: [0, 1], color: "#9467bd"},
-                            { range: [1, 2], color: "#1f77b4"}
-                            { range: [2, 3], color: "#9467bd"},
-                            { range: [4, 5], color: "#9467bd"},
-                            { range: [5, 6], color: "#9467bd"},
-                            { range: [6, 7], color: "#9467bd"},
-                            { range: [7, 8], color: "#9467bd"},
-                            { range: [8, 9], color: "#9467bd"}
+                            { range: [0, 1], color: "lightseagreen"},
+                            { range: [1, 2], color: "mintcream"},
+                            { range: [2, 3], color: "lightseagreen"},
+                            { range: [3, 4], color: "mintcream"},
+                            { range: [4, 5], color: "lightseagreen"},
+                            { range: [5, 6], color: "mintcream"},
+                            { range: [6, 7], color: "lightseagreen"},
+                            { range: [7, 8], color: "mintcream"},
+                            { range: [8, 9], color: "lightseagreen"},
+                            { range: [9, 10], color: "mintcream"},
                         ],
                         threshold: {
                             line: { color: "red", width: 4 },
@@ -139,3 +141,4 @@ function optionChanged(newSample) {
             Plotly.newPlot('gauge', data, layout);
     });
 }
+
